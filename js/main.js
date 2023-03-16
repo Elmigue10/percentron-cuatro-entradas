@@ -63,11 +63,11 @@ function weightRecalculate(index) {
     let X2 = trueTable[1][index];
     let X3 = trueTable[2][index];
     let X4 = trueTable[3][index];
-    weight[0] = weight[0] + (2 * E * Y * X1);
-    weight[1] = weight[1] + (2 * E * Y * X2);
-    weight[2] = weight[2] + (2 * E * Y * X3);
-    weight[3] = weight[3] + (2 * E * Y * X4);
-    ERROR = (ERROR + (2 * E * Y * umbral));
+    weight[0] = parseFloat((weight[0] + (2 * E * Y * X1)).toFixed(1));
+    weight[1] = parseFloat(weight[1] + (2 * E * Y * X2).toFixed(1));
+    weight[2] = parseFloat(weight[2] + (2 * E * Y * X3).toFixed(1));
+    weight[3] = parseFloat(weight[3] + (2 * E * Y * X4).toFixed(1));
+    ERROR = parseFloat((ERROR + (2 * E * Y * umbral)).toFixed(1));
 
 }
 
@@ -122,12 +122,26 @@ function initializeValues() {
     counter = 0;
     weight = [];
     perceptron = true;
-    weight.push(parseFloat(document.getElementById("W1").value));
-    weight.push(parseFloat(document.getElementById("W2").value));
-    weight.push(parseFloat(document.getElementById("W3").value));
-    weight.push(parseFloat(document.getElementById("W4").value));
-    E = parseFloat(document.getElementById("E").value)
-    ERROR = parseFloat(document.getElementById("ERROR").value)
+    let randomNumber = parseFloat((Math.random() * 2 - 1).toFixed(1)); 
+    weight.push(randomNumber);
+    document.getElementById("W1").value = randomNumber;
+    
+    randomNumber = parseFloat((Math.random() * 2 - 1).toFixed(1));
+    weight.push(randomNumber);
+    document.getElementById("W2").value = randomNumber;
+    
+    randomNumber = parseFloat((Math.random() * 2 - 1).toFixed(1));
+    weight.push(randomNumber);
+    document.getElementById("W3").value = randomNumber;
+    
+    randomNumber = parseFloat((Math.random() * 2 - 1).toFixed(1));
+    weight.push(parseFloat((Math.random() * 2 - 1).toFixed(1)));
+    document.getElementById("W4").value = randomNumber;
+    
+    E = parseFloat((Math.random() * 2 - 1).toFixed(1));
+    document.getElementById("E").value = E;
+    ERROR = parseFloat((Math.random() * 2 - 1).toFixed(1));
+    document.getElementById("ERROR").value = ERROR;
     clearLabelTestResponse();
 }
 
@@ -139,6 +153,7 @@ function start() {
     }
     if (!perceptron) {
         addRowError();
+        removeTestResponse();
         hiddenLabels();
         return;
     }
@@ -231,4 +246,13 @@ function clearLabelTestResponse(){
     selectValue2.value='';
     selectValue3.value='';
     selectValue4.value='';
+}
+
+function removeTestResponse(){
+    var myCollapse = document.getElementById('testResponse');
+    if(myCollapse.classList.contains(".collapsing")){
+        myCollapse.className = "collapse";
+        myCollapse.style.display = '';
+        myCollapse.removeAttribute("data-bs-toggle");
+    }  
 }
